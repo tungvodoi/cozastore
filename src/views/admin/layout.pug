@@ -1,0 +1,22 @@
+doctype html
+html(lang='en')
+  include includes/header.pug
+  body.header-fixed
+    include includes/navbar.pug
+    // partial
+    .page-body
+      // partial:partials/_sidebar.html
+      include includes/sidebar.pug
+      // partial
+      .page-content-wrapper
+        block content
+        // partial:partials/_footer.html
+        include includes/footer.pug
+        // partial
+        // page content ends
+        // page body ends
+        // SCRIPT LOADING START FORM HERE /////////////
+        // plugins:js
+        block footerjs
+        
+        // endbuild

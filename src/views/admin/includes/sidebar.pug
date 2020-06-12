@@ -1,0 +1,65 @@
+.sidebar
+        .user-profile
+          .display-avatar.animated-avatar
+            img.profile-img.img-lg.rounded-circle(src='../admin/images/profile/male/image_1.png' alt='profile image')
+          .info-wrapper
+            p.user-name Allen Clerk
+            h6.display-income $3,400,00
+        ul.navigation-menu
+          li.nav-category-divider MAIN
+          li
+            a(href='/admin')
+              span.link-title Dashboard
+              i.mdi.mdi-gauge.link-icon
+          li
+            a(href='#product' data-toggle='collapse' aria-expanded='false')
+              span.link-title Product
+              i.mdi.mdi-store.link-icon
+            ul#product.collapse.navigation-submenu
+              li
+                a(href='/admin/product') All product
+              li
+                a(href='/admin/add-product') Add product
+          li
+            a(href='#sample-pages' data-toggle='collapse' aria-expanded='false')
+              span.link-title Sample Pages
+              i.mdi.mdi-flask.link-icon
+            ul#sample-pages.collapse.navigation-submenu
+              li
+                a(href='pages/sample-pages/login_1.html' target='_blank') Login
+              li
+                a(href='pages/sample-pages/error_2.html' target='_blank') Error
+          li
+            a(href='#ui-elements' data-toggle='collapse' aria-expanded='false')
+              span.link-title UI Elements
+              i.mdi.mdi-bullseye.link-icon
+            ul#ui-elements.collapse.navigation-submenu
+              li
+                a(href='pages/ui-components/buttons.html') Buttons
+              li
+                a(href='pages/ui-components/tables.html') Tables
+              li
+                a(href='pages/ui-components/typography.html') Typography
+          li
+            a(href='pages/forms/form-elements.html')
+              span.link-title Forms
+              i.mdi.mdi-clipboard-outline.link-icon
+          li
+            a(href='pages/charts/chartjs.html')
+              span.link-title Charts
+              i.mdi.mdi-chart-donut.link-icon
+          li
+            a(href='pages/icons/material-icons.html')
+              span.link-title Icons
+              i.mdi.mdi-flower-tulip-outline.link-icon
+          li.nav-category-divider DOCS
+          li
+            a(href='../docs/docs.html')
+              span.link-title Documentation
+              i.mdi.mdi-asterisk.link-icon
+        .sidebar-upgrade-banner
+          p.text-gray
+            | Upgrade to 
+            b.text-primary PRO
+            |  for more exciting features
+          a.btn.upgrade-btn(target='_blank' href='http://www.uxcandy.co/product/label-pro-admin-template/') Upgrade to PRO
