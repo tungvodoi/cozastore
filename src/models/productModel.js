@@ -1,18 +1,26 @@
 const mongoose = require('mongoose');
 const productSchema = new mongoose.Schema({
-  productName: String,
-  images: [String],
-  sizes: [String],
-  color: [String],
-  price: Number,
-  quantity: Number,
-  description: String,
-  weight: Number,
-  dimensions: {
-    length: Number,
-    width: Number,
-    height: Number,
+  productName: { type: String, required: true },
+  product_attr: [
+    {
+      color: { type: String, required: true },
+      size: { type: String, required: true },
+      quantity: { type: Number, required: true },
+    },
+  ],
+  category: {
+    type: String,
+    required: true,
   },
+  images: [String],
+  weight: { type: Number, default: null },
+  dimensions: {
+    length: { type: Number, default: null },
+    width: { type: Number, default: null },
+    height: { type: Number, default: null },
+  },
+  price: { type: String, required: true },
+  description: String,
   materials: String,
   createdAt: {
     type: Number,
@@ -23,9 +31,12 @@ const productSchema = new mongoose.Schema({
 });
 
 productSchema.statics = {
-  createNew(item){
+  createNew(item) {
     return this.create(item);
-  }
+  },
+  findProductLimit(limit) {
+    return this.find({}).limit(limit);
+  },
 };
 // let a = mongoose.model('product', productSchema);
 // a.insertOne

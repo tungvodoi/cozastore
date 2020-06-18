@@ -21,6 +21,13 @@
               li
                 a(href='/admin/add-product') Add product
           li
+            a(href='#category' data-toggle='collapse' aria-expanded='false')
+              span.link-title Category
+              i.mdi.mdi-store.link-icon
+            ul#category.collapse.navigation-submenu
+              li
+                a(href='/admin/add-category') Add category
+          li
             a(href='#sample-pages' data-toggle='collapse' aria-expanded='false')
               span.link-title Sample Pages
               i.mdi.mdi-flask.link-icon

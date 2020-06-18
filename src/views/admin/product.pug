@@ -1,0 +1,29 @@
+extends layout.pug
+
+block append head
+block content
+	.page-content-wrapper-inner
+		.viewport-header
+			nav(aria-label='breadcrumb')
+				ol.breadcrumb.has-arrow
+					li.breadcrumb-item
+						a(href='#') Dashboard
+					li.breadcrumb-item
+						a(href='#') Product
+		.content-viewport
+			.row
+				.col-lg-12
+					.grid
+						p.grid-header All products
+						.grid-body
+							.item-wrapper
+								
+
+block append footerjs
+	script(src='../admin/vendors/js/core.js')
+	script(src='../admin/vendors/js/vendor.addons.js')
+	// endinject
+	// Vendor Js For This Page Ends
+	// Vendor Js For This Page Ends
+	// build:js
+	script(src='../admin/js/template.js')

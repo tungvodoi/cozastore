@@ -1,0 +1,52 @@
+extends layout.pug
+
+block append head
+block content
+	.page-content-wrapper-inner
+		.viewport-header
+			nav(aria-label='breadcrumb')
+				ol.breadcrumb.has-arrow
+					li.breadcrumb-item
+						a(href='#') Dashboard
+					li.breadcrumb-item
+						a(href='#') Category
+					li.breadcrumb-item.active(aria-current='page') Add Category
+		.content-viewport
+			.row
+				.col-lg-12
+					.grid
+						p.grid-header Add category
+						.grid-body
+							.item-wrapper
+								form#form-add-product(action="/admin/add-category" method="POST")
+									.row.mb-3
+										.col-md-8.mx-auto
+											.form-group.row.showcase_row_area
+												.col-md-12
+													- if(errors)
+														each val in errors
+															.alert.alert-danger(role="alert")= val
+													- if(success)
+														.alert.alert-success(role="alert")= success
+											.form-group.row.showcase_row_area
+												.col-md-2.showcase_text_area
+													label(for='productName') Category
+												.col-md-10.showcase_content_area
+													input#category.form-control(type='text' name="category" value='')
+											.form-group.row.showcase_row_area
+												.col-md-2.showcase_text_area
+													label(for='productName') Sub Category
+												.col-md-10.showcase_content_area
+													input#subcategory.form-control(type='text' name="subCategory" value='')
+											.form-group.row.showcase_row_area
+												.col-md-12.text-center.mt-3
+													button#btn-add-product.btn.btn-success(type="submit") Add Category
+
+block append footerjs
+	script(src='../admin/vendors/js/core.js')
+	script(src='../admin/vendors/js/vendor.addons.js')
+	// endinject
+	// Vendor Js For This Page Ends
+	// Vendor Js For This Page Ends
+	// build:js
+	script(src='../admin/js/template.js')

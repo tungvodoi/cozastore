@@ -1,12 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const flash = require('connect-flash');
+// const flash = require('connect-flash');
+const path = require('path');
 
 const configViewEngine = require('./config/viewEngine');
 const configSession = require('./config/configSession');
 const connectDB = require('./config/connectDB');
-const initRoutes = require('./routes/index');
+const initRoutes = require('./routes/web');
 
 // Init app
 const app = express();
@@ -17,8 +18,8 @@ connectDB();
 //Config session
 configSession(app);
 
-//Enable flash message
-app.use(flash());
+// //Enable flash message
+// app.use(flash());
 
 //config view engine
 configViewEngine(app);
@@ -30,6 +31,11 @@ app.use(bodyParser.json());
 // Init all routes
 initRoutes(app);
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+//Error
+app.get('*', function (req, res) {
+  res.render('admin/404');
+});
+
+app.listen(process.env.APP_PORT, process.env.APP_HOST || 5000, () => {
+  console.log(`Server is running on port ${process.env.APP_PORT || 5000}`);
 });

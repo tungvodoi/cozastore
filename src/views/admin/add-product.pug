@@ -2,8 +2,9 @@ extends layout.pug
 
 block append head
 	link(rel="stylesheet" href="../admin/css/bootstrap-tagsinput.css")
-	link(rel="stylesheet" href="../admin/css/style.css")
-
+	link(type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+	link(rel="stylesheet" href="../admin/css/image-uploader.css")
+	link(rel="stylesheet" href="../admin/css/addProduct.css")
 block content
 	.page-content-wrapper-inner
 		.viewport-header
@@ -21,7 +22,7 @@ block content
 						p.grid-header Add product
 						.grid-body
 							.item-wrapper
-								form(action="/admin/add-product" method="POST" enctype="multipart/form-data")
+								form#form-add-product(action="/admin/add-product" method="POST" enctype="multipart/form-data")
 									.row.mb-3
 										.col-md-8.mx-auto
 											.form-group.row.showcase_row_area
@@ -32,62 +33,69 @@ block content
 													- if(success)
 														.alert.alert-success(role="alert")= success
 											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
-													label(for='inputType1') Name
-												.col-md-9.showcase_content_area
-													input#inputType1.form-control(type='text' name="productName" value='')
+												.col-md-2.showcase_text_area
+													label(for='productName') Name
+												.col-md-10.showcase_content_area
+													input#productName.form-control(type='text' name="productName" value='')
 											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
-													label(for='inputType1') Price
-												.col-md-9.showcase_content_area
-													input#inputType4.form-control(type='number' name="price" value='')
+												.col-md-2.showcase_text_area
+													label(for='price') Price
+												.col-md-10.showcase_content_area
+													input#price.form-control(type='number' name="price" value='')
 											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
-													label(for='inputType9') Description
-												.col-md-9.showcase_content_area
-													textarea#inputType9.form-control(cols='12' name="description" rows='5')
+												.col-md-2.showcase_text_area
+													label(for='category') Category
+												.col-md-10.showcase_content_area.position-relative
+													ul.autocomplete.position-absolute
+													input#add-product-category.form-control(type='text' name="category" value='')
+											.wrap-add-color
+												.form-group.row.showcase_row_area
+													.col-md-2.showcase_text_area
+														label(for='color') Color
+													.col-md-2.showcase_content_area
+														input.color.form-control(type="text" value="" name="colors")
+													.col-md-2.showcase_text_area
+														label(for='size') Size
+													.col-md-2.showcase_content_area
+														input.size.form-control(type="text" value="" name="sizes")
+													.col-md-2.showcase_text_area
+														label(for='quantity') Quantity
+													.col-md-2.showcase_content_area
+														input.quantity.form-control(type="number" value="" name="quantity")
 											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
-													label(for='size') Size
-												.col-md-9.showcase_content_area
-													input#size(type="text" value="" name="sizes" data-role="tagsinput")
+												.col-md-10.offset-2
+													button#add-more-color.btn.btn-outline-secondary.w-100.mt-3(type='button') Add more color
 											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
-													label(for='color') Color
-												.col-md-9.showcase_content_area
-													input#color(type="text" value="" name="colors" data-role="tagsinput")
+												.col-md-2.showcase_text_area
+													label(for='description') Description
+												.col-md-10.showcase_content_area
+													textarea#description.form-control(cols='12' name="description" rows='5')
 											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
-													label(for='quantity') Quantity
-												.col-md-9.showcase_content_area
-													input#quantity.form-control(type='number' name="quantity" value='')
+												.col-md-2.showcase_text_area
+													label(for='materials') Materials
+												.col-md-10.showcase_content_area
+													input#materials.form-control(type='text' name="materials" value='')
 											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
-													label(for='quantity') Weight
-												.col-md-9.showcase_content_area
-													input#quantity.form-control(type='number' name="weight" value='')
+												.col-md-2.showcase_text_area
+													label(for='weight') Weight
+												.col-md-10.showcase_content_area
+													input#weight.form-control(type='number' name="weight" value='')
 											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
+												.col-md-2.showcase_text_area
 													label(for='quantity') Dimensions
 												.col-md-3.showcase_content_area
-													input#quantity.form-control(type='number' name="length" value='')
+													input.length.form-control(type='number' name="length" value='')
 												.col-md-3.showcase_content_area
-													input#quantity.form-control(type='number' name="width" value='')
-												.col-md-3.showcase_content_area
-													input#quantity.form-control(type='number' name="height" value='')
+													input.width.form-control(type='number' name="width" value='')
+												.col-md-4.showcase_content_area
+													input.height.form-control(type='number' name="height" value='')
 											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
-													label(for='quantity') Materials
-												.col-md-9.showcase_content_area
-													input#quantity.form-control(type='text' name="materials" value='')
-											.form-group.row.showcase_row_area
-												.col-md-3.showcase_text_area
-													label(for='quantity') Image
-												.col-md-9.showcase_content_area
-													input#upload-image-admin.form-control(type='file' name="images" multiple)
+													.col-md-2.showcase_text_area
+														label(for='upload-image-admin') Image
+													.col-md-10.input-images
 											.form-group.row.showcase_row_area
 												.col-md-12.text-center.mt-3
-													button.btn.btn-success(type="submit") Submit
+													button#btn-add-product.btn.btn-success(type="submit") Add Product
 
 block append footerjs
 	script(src='../admin/vendors/js/core.js')
@@ -98,3 +106,5 @@ block append footerjs
 	// build:js
 	script(src='../admin/js/template.js')
 	script(src='../admin/js/bootstrap-tagsinput.js')
+	script(src='../admin/js/image-uploader.js')
+	script(src='../admin/js/addProduct.js')
