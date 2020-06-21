@@ -49,7 +49,7 @@ let addProduct = (req, res) => {
       req.files.forEach((file) => {
         newProduct.images.push(file.filename);
       });
-      // console.log(newProduct);
+      console.log(newProduct);
       //Add product
       let addProductStatus = await productService.addProduct(newProduct);
 

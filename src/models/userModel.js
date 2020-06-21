@@ -29,6 +29,9 @@ let userModel = new mongoose.Schema({
     isActive: { type: Boolean, default: false },
     verifyToken: String,
   },
+  cart: {
+    products: [{ productId: String, quantity: Number }],
+  },
   createdAt: {
     type: Number,
     default: Date.now,

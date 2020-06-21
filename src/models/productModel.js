@@ -34,10 +34,13 @@ productSchema.statics = {
   createNew(item) {
     return this.create(item);
   },
+  findProductById(productId) {
+    return this.findById(productId).exec();
+  },
   findProductLimit(limit) {
     return this.find({}).limit(limit);
   },
 };
 // let a = mongoose.model('product', productSchema);
-// a.insertOne
+// a.findById
 module.exports = mongoose.model('product', productSchema);

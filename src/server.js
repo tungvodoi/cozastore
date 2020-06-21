@@ -1,8 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-// const flash = require('connect-flash');
-const path = require('path');
+const cookieParser = require('cookie-parser');
 
 const configViewEngine = require('./config/viewEngine');
 const configSession = require('./config/configSession');
@@ -15,11 +14,11 @@ const app = express();
 //config DB
 connectDB();
 
+//Config cookie
+app.use(cookieParser());
+
 //Config session
 configSession(app);
-
-// //Enable flash message
-// app.use(flash());
 
 //config view engine
 configViewEngine(app);

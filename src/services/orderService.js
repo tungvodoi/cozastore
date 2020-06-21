@@ -1,8 +1,7 @@
 let ProductModel = require('../models/productModel');
-
-let getProductDetail = (productId) => {
+let addToCart = (productId) => {
   return new Promise(async (resolve, reject) => {
-    let product = await ProductModel.findById(productId);
+    let product = await ProductModel.findProductById(productId);
     resolve(product);
   });
 };
@@ -13,6 +12,6 @@ let findProductById = (productId) => {
   });
 };
 module.exports = {
-  getProductDetail,
+  addToCart,
   findProductById,
 };

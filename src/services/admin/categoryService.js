@@ -81,7 +81,6 @@ const getCategoryAndSubCategory = (keyword) => {
           return categoryAndSubcategory;
         })
       );
-      console.log(categoryAndSubcategory);
       resolve(categoryAndSubcategory);
     } catch (error) {
       console.log(error);
