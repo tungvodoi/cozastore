@@ -3592,6 +3592,12 @@ input.num-product::-webkit-inner-spin-button {
 .product-detail-color {
   text-transform: capitalize;
 }
-.product-detail-size{
+.product-detail-size {
   text-transform: uppercase;
+}
+.select-color ~ .select2 .select2-selection__rendered{
+  text-transform: capitalize !important;
+}
+.select-size ~ .select2 .select2-selection__rendered{
+  text-transform: uppercase !important;
 }

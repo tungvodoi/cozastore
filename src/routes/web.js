@@ -16,6 +16,16 @@ const initRoutes = (app) => {
   //Init router admin
   initRoutesAdmin(app);
 
+  //Get cart
+  // app.get('*', (req, res, next) => {
+  //   if (!req.session.cart) {
+  //     req.session.cart = {
+  //       items: {},
+  //       total: 0,
+  //     };
+  //   }
+  //   next();
+  // });
   // Home router
   app.get('/', homeController.getHome);
 
@@ -27,5 +37,6 @@ const initRoutes = (app) => {
 
   // Cart router
   app.post('/add-to-cart', cartController.addToCart);
+  app.post('/remove-from-cart', cartController.removeFromCart);
 };
 module.exports = initRoutes;
