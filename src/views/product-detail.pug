@@ -25,10 +25,10 @@ block content
         | Home
         i.fa.fa-angle-right.m-l-9.m-r-10(aria-hidden='true')
       a.stext-109.cl8.hov-cl1.trans-04(href='product.html')
-        | Men
+        | #{productDetail.category}
         i.fa.fa-angle-right.m-l-9.m-r-10(aria-hidden='true')
       span.stext-109.cl4
-        | Lightweight Jacket
+        | #{productDetail.productName}
   // Product Detail
   section.sec-product-detail.bg0.p-t-65.p-b-60
     .container
@@ -434,4 +434,3 @@ block footer
     });
   // ===============================================================================================
   script(src='/js/main.js')
-  script(src='/js/Cart.js')

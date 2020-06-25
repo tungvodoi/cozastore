@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const connectFlash = require('connect-flash');
 
 const configViewEngine = require('./config/viewEngine');
 const configSession = require('./config/configSession');
@@ -10,7 +12,10 @@ const initRoutes = require('./routes/web');
 
 // Init app
 const app = express();
-
+app.use('*', (req, res, next) => {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  next();
+});
 //config DB
 connectDB();
 
@@ -26,6 +31,13 @@ configViewEngine(app);
 //Enable post data for request
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//Enable flash messages
+app.use(connectFlash());
+
+// Init passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Init all routes
 initRoutes(app);

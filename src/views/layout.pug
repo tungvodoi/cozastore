@@ -5,5 +5,8 @@ head
 include includes/nav
 block content
 include includes/footer
-block footer
 
+if !user
+  include includes/authenModel
+block footer
+script(src='/js/Cart.js')

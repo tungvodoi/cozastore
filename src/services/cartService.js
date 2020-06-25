@@ -1,35 +1,84 @@
 let ProductModel = require('../models/productModel');
+let UserModel = require('../models/userModel');
 
 let getCart = (cartProducts) => {
   return new Promise(async (resolve, reject) => {
-    let listProducts = [];
     for (let i = 0; i < cartProducts.length; i++) {
       let product = await ProductModel.findProductById(
         cartProducts[i].productId
       );
-      product.quantity = cartProducts[i].quantity;
-      listProducts.push(product);
+      cartProducts[i].price = product.price;
+      cartProducts[i].images = product.images;
     }
-    resolve(listProducts);
+
+    resolve(cartProducts);
   });
 };
-let addToCart = (productId) => {
-  return new Promise(async (resolve, reject) => {
-    let product = await ProductModel.findProductById(productId);
-    resolve(product);
-  });
+let addToCartUser = async (userId, product) => {
+  return await UserModel.addToCart(userId, product);
 };
-let inCart = (cartProducts, productId, quantity = 0) => {
+let inCart = (cart, productId, size, color) => {
   let found = false;
-  cartProducts.forEach((product) => {
-    if (product.productId === productId) {
-      product.quantity += parseInt(quantity);
+  cart.forEach((product) => {
+    if (
+      product.productId === productId &&
+      product.size === size &&
+      product.color === color
+    ) {
       found = true;
     }
-    return product;
   });
-
   return found;
+};
+let increseQuantityUser = async (
+  userId,
+  cart,
+  productId,
+  quantity,
+  size,
+  color
+) => {
+  let productExists = null;
+  await Promise.all(
+    cart.map(async (product) => {
+      if (
+        product.productId === productId &&
+        product.size === size &&
+        product.color === color
+      ) {
+        product.quantity += parseInt(quantity);
+        await UserModel.updateQuantityProduct(
+          userId,
+          product._id,
+          product.quantity
+        );
+        productExists = {
+          subProductId: product.subProductId,
+          newQuantity: product.quantity,
+        };
+
+        return product;
+      }
+    })
+  );
+  return productExists;
+};
+let increseQuantitySession = (cart, productId, quantity, size, color) => {
+  let productExists = null;
+  cart.forEach((product) => {
+    if (
+      product.productId === productId &&
+      product.size === size &&
+      product.color === color
+    ) {
+      product.quantity += parseInt(quantity);
+      productExists = {
+        subProductId: product.subProductId,
+        newQuantity: product.quantity,
+      };
+    }
+  });
+  return productExists;
 };
 let calculateTotals = async (cart) => {
   return new Promise(async (resolve, reject) => {
@@ -46,15 +95,25 @@ let calculateTotals = async (cart) => {
 };
 let removeFromCart = async (cartProducts, productId) => {
   return new Promise(async (resolve, reject) => {
-    cartProducts = cartProducts.filter(product => product.productId != productId);
+    cartProducts = cartProducts.filter(
+      (product) => product.productId != productId
+    );
     resolve(true);
   });
 };
-
+let removeFromCartUser = async (userId, subProductId) => {
+  return new Promise(async (resolve, reject) => {
+    await UserModel.deleteProductInCart(userId, subProductId);
+    resolve(true);
+  });
+};
 module.exports = {
-  addToCart,
+  addToCartUser,
   getCart,
   inCart,
   calculateTotals,
   removeFromCart,
+  increseQuantitySession,
+  increseQuantityUser,
+  removeFromCartUser,
 };

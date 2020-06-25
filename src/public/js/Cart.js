@@ -2,56 +2,81 @@
 $('.js-addcart-detail').click(function (e) {
   let productId = e.target.attributes['data-id'].value;
   let quantity = parseInt($('.num-product').val());
-  $.post('/add-to-cart', { productId, quantity }, function (product) {
-    // If product not exists in cart
-    if (!productExitsInCart(productId)) {
-      $('.header-cart-wrapitem').append(`
-      <li class="header-cart-item flex-w flex-t m-b-12" data-id="${productId}">
-        <div class="header-cart-item-img">
-          <img src="/images/products/${product.images[0]}" alt="IMG">
-        </div>
-        <div class="header-cart-item-txt p-t-8">
-            <a class="header-cart-item-name m-b-18 hov-cl1 trans-04" href="#">${product.productName}</a>
-            <span class="header-cart-item-info">
-              <span class="header-cart-item-info-quantity">${quantity}</span>
-              x 
-              <span class="header-cart-item-info-price">${product.price}</span>
+  let size = $('.js-select2.select-size').val();
+  let color = $('.js-select2.select-color').val();
+  $.ajax({
+    type: 'POST',
+    url: '/add-to-cart',
+    data: { productId, quantity, size, color },
+    success: function (product) {
+      // If product not exists in cart
+      if (product.exists) {
+        $('.header-cart-item').each((index, element) => {
+          if (
+            product.productExists.subProductId ===
+            element.attributes['data-subId'].value
+          ) {
+            let currentProduct = $(element).find(
+              '.header-cart-item-info-quantity'
+            );
+            currentProduct.text(product.productExists.newQuantity);
+          }
+        });
+      } else {
+        $('.header-cart-wrapitem').append(`
+        <li class="header-cart-item flex-w flex-t m-b-12" data-id="${product.productId}" data-subId="${product.subProductId}">
+          <div class="header-cart-item-img">
+              <img src="/images/products/${product.images[0]}"
+                  alt="IMG" />
+          </div>
+          <div class="header-cart-item-txt p-t-8">
+              <a class="header-cart-item-name m-b-18 hov-cl1 trans-04" href="#">${product.productName}</a>
+              <span class="header-cart-item-info">
+                  <span class="header-cart-item-info-quantity">${product.quantity}</span>
+                  x
+                  <span class="header-cart-item-info-price">${product.price}</span>
               </span>
-        </div>
-      </li>
-      `);
-    }
-    // reset element remove cart
-    $('.header-cart-item-img').click(removeFromCart);
-    // the number product in cart
-    resetNumberCart();
-    //Total
-    $('.header-cart-total span').text(calulateTotals());
+              <span class="header-cart-item-info">
+                  <span class="header-cart-item-info-size">${product.size}</span>
+              </span>
+              <span class="header-cart-item-info">
+                  <span class="header-cart-item-info-color">${product.color}</span>
+              </span>
+          </div>
+        </li>
+        `);
+      }
+      // reset element to click remove cart
+      $('.header-cart-item-img').click(removeFromCart);
+      // the number product in cart
+      resetNumberCart();
+      //Total
+      $('.header-cart-total span').text(calulateTotals());
+    },
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+      console.log(textStatus);
+    },
   });
 });
-let productExitsInCart = (productId) => {
-  let found = false;
-  $('.header-cart-item').each((index, element) => {
-    if (productId === element.attributes['data-id'].value) {
-      let quantity = parseInt($('.num-product').val());
-      let currentProduct = $(element).find('.header-cart-item-info-quantity');
-      let currentQuantity = parseInt(currentProduct.text());
-      currentProduct.text(currentQuantity + quantity);
-      found = true;
-    }
-  });
-  return found;
-};
+
 // remove from cart
 function removeFromCart(e) {
-  let productId = $(e.target).parent().attr('data-id');
-  $.post('/remove-from-cart', { productId }, function (status) {
-    if (status) {
-      $(e.target).parent().remove();
-      $('.header-cart-total span').text(0);
-      resetNumberCart();
-      $('.header-cart-total span').text(calulateTotals());
-    }
+  let subProductId = $(e.target).parent().attr('data-subId');
+  $.ajax({
+    type: 'POST',
+    url: '/remove-from-cart',
+    data: { subProductId },
+    success: function (status) {
+      if (status) {
+        $(e.target).parent().remove();
+        $('.header-cart-total span').text(0);
+        resetNumberCart();
+        $('.header-cart-total span').text(calulateTotals());
+      }
+    },
+    error: function (XMLHttpRequest, textStatus, errorThrown) {
+      console.log('some error');
+    },
   });
 }
 $('.header-cart-item-img').click(removeFromCart);

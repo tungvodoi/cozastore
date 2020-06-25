@@ -1,13 +1,20 @@
 const express = require('express');
 const path = require('path');
+const passport = require('passport');
 
 const {
   homeController,
   productController,
   cartController,
+  authenController,
 } = require('../controllers/index');
+const { authValidation } = require('../validation/index');
 const initRoutesAdmin = require('./admin/index');
 
+const initPassportLocal = require('../controllers/passportController/local');
+
+//Init passport
+initPassportLocal();
 /**
  * Init all routes
  * @param {app} app
@@ -16,18 +23,20 @@ const initRoutes = (app) => {
   //Init router admin
   initRoutesAdmin(app);
 
-  //Get cart
-  // app.get('*', (req, res, next) => {
-  //   if (!req.session.cart) {
-  //     req.session.cart = {
-  //       items: {},
-  //       total: 0,
-  //     };
-  //   }
-  //   next();
-  // });
   // Home router
   app.get('/', homeController.getHome);
+
+  //Authen router
+  app.post('/register', authValidation.register, authenController.register);
+  app.post(
+    '/login',
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/',
+      failureFlash: true,
+    })
+  );
+  app.get('/logout', authenController.logout);
 
   // Product router
   app.get('/product', (req, res) => {

@@ -2,7 +2,7 @@ let ProductModel = require('../models/productModel');
 
 let getProductDetail = (productId) => {
   return new Promise(async (resolve, reject) => {
-    let product = await ProductModel.findById(productId);
+    let product = await ProductModel.findProductById(productId);
     resolve(product);
   });
 };
