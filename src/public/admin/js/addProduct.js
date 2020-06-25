@@ -24,7 +24,7 @@ $('#add-product-category').keyup(function () {
     'get-category-and-sub',
     { keyword: $('#add-product-category').val() },
     function (data) {
-      console.log(data);
+      // console.log(data);
       let categoryTemplate = ``;
       data.forEach((child) => {
         categoryTemplate += `<li>${child.category} > <span class="sub">${child.subCategory}</span></li>`;

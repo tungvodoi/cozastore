@@ -10,7 +10,7 @@
     .header-cart-content.flex-w.js-pscroll
       ul.header-cart-wrapitem.w-full
         each product in cart.cartProducts
-          li.header-cart-item.flex-w.flex-t.m-b-12(data-id=product._id)
+          li.header-cart-item.flex-w.flex-t.m-b-12(data-id=product.productId data-subId=product.subProductId)
             .header-cart-item-img
               img(src='/images/products/'+product.images[0] , alt='IMG')
             .header-cart-item-txt.p-t-8
@@ -20,6 +20,10 @@
                 span.header-cart-item-info-quantity #{product.quantity}
                 | x 
                 span.header-cart-item-info-price #{product.price}
+              span.header-cart-item-info
+                span.header-cart-item-info-size #{product.size}
+              span.header-cart-item-info
+                span.header-cart-item-info-color #{product.color}
         //- li.header-cart-item.flex-w.flex-t.m-b-12
         //-   .header-cart-item-img
         //-     img(src='/images/item-cart-02.jpg', alt='IMG')

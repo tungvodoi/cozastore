@@ -1,0 +1,74 @@
+
+
+#authenModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='authenModal', aria-hidden='true')
+  .modal-dialog.modal-dialog-centered(role='document')
+    .modal-content
+      #containerForm
+        .formLeft
+          img(src='/images/icons/logo-01.png')
+        .formRight
+          // Forgot password form
+          form#forgot.otherForm
+            header
+              h1 Forgot Password
+              p Seems like your password is missing
+            section
+              label
+                p Email
+                input(type='email', placeholder=' ')
+                .border
+              button(type='submit') Send email
+            footer
+              button.forgotBtn(type='button') Back
+          // Login form
+          form#login(action="/login" method="post")
+            header
+              h1 Welcome back
+                if(errorLogin)
+                  each error in errorLogin
+                    p.error= error
+                if(registerSuccess)
+                  each success in registerSuccess
+                    p.success= success
+            section
+              label
+                p Username
+                input(type='text', placeholder=' ' name="username")
+                .border
+              label
+                p Password
+                input(type='password', placeholder=' ' name="password")
+                .border
+              button(type='submit') Login
+            footer
+              button.forgotBtn(type='button') Forgot password?
+              button.registerBtn(type='button') Need an account?
+          // Register form
+          form#register.otherForm(action="/register" method="POST")
+            header
+              h1 Become a Bro
+                if(errorRegister)
+                    each error in errorRegister
+                      p.error= error
+            section
+              label
+                p Username
+                input(type='text', placeholder=' ' name="username")
+                .border
+              label
+                p Email
+                input(type='email', placeholder=' ' name="email")
+                .border
+              label
+                p Password
+                input(type='password', placeholder=' ' name="password")
+                .border
+              label
+                p Repeat Password
+                input(type='password', placeholder=' ' name="password_confirmation")
+                .border
+              button(type='submit') Register
+            footer
+              button.registerBtn(type='button') Back
+      //- .modal-footer
+        button.btn.btn-secondary(type='button', data-dismiss='modal') Close

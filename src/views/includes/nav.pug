@@ -7,19 +7,23 @@ header.header-v4
       .content-topbar.flex-sb-m.h-full.container
         .left-top-bar
           | Free shipping for standard order over $100
-        .right-top-bar.flex-w.h-full
-          a.flex-c-m.trans-04.p-lr-25(href='#')
+        ul.right-top-bar.flex-w.h-full
+          li.flex-c-m.trans-04.p-lr-25(href='#')
             | Help &amp; FAQs
-          a.flex-c-m.trans-04.p-lr-25(href='#')
-            | My Account
-          a.flex-c-m.trans-04.p-lr-25(href='#')
+          li.flex-c-m.trans-04.p-lr-25(href='#', data-toggle="modal", data-target="#authenModal")
+            if user
+              | #{user.username}
+              a.nav-logout(href="/logout") Logout
+            else
+              | Login
+          li.flex-c-m.trans-04.p-lr-25(href='#')
             | EN
-          a.flex-c-m.trans-04.p-lr-25(href='#')
+          li.flex-c-m.trans-04.p-lr-25(href='#')
             | USD
     .wrap-menu-desktop
       nav.limiter-menu-desktop.container
         // Logo desktop
-        a.logo(href='#')
+        a.logo(href='/')
           img(src='/images/icons/logo-01.png' alt='IMG-LOGO')
         // Menu desktop
         .menu-desktop
@@ -79,7 +83,7 @@ header.header-v4
         .right-top-bar.flex-w.h-full
           a.flex-c-m.p-lr-10.trans-04(href='#')
             | Help &amp; FAQs
-          a.flex-c-m.p-lr-10.trans-04(href='#')
+          a.flex-c-m.p-lr-10.trans-04.username-nav(href='#', data-toggle="modal", data-target="#authenModal")
             | My Account
           a.flex-c-m.p-lr-10.trans-04(href='#')
             | EN

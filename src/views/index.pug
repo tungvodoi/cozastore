@@ -16,6 +16,8 @@ block append header
   // ===============================================================================================
   link(rel='stylesheet' type='text/css' href='vendor/perfect-scrollbar/perfect-scrollbar.css')
   // ===============================================================================================
+  script(src='vendor/jquery/jquery-3.2.1.min.js')
+  // ===============================================================================================
 block content
   include includes/cart
   // Slider
@@ -340,8 +342,6 @@ block content
                   i.fa.fa-google-plus
 block footer
   // ===============================================================================================
-  script(src='vendor/jquery/jquery-3.2.1.min.js')
-  // ===============================================================================================
   script(src='vendor/animsition/js/animsition.min.js')
   // ===============================================================================================
   script(src='vendor/bootstrap/js/popper.js')
@@ -424,5 +424,23 @@ block footer
     ps.update();
     })
     });
+  //AUTHEN
+  if(errorRegister.length > 0)
+    script(type='text/javascript').
+      $('#authenModal').modal({
+          show: true
+      });
+      $('#register, #formContainer').toggleClass('toggle');
+
+  if(registerSuccess.length > 0)
+    script(type='text/javascript').
+      $('#authenModal').modal({
+          show: true
+      });
+  if(errorLogin.length > 0)
+    script(type='text/javascript').
+      $(window).on('load',function(){
+        $('#authenModal').modal('show');
+      });
   // ===============================================================================================
   script(src='js/main.js')
