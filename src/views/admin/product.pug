@@ -1,6 +1,9 @@
 extends layout.pug
 
 block append head
+	link(type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+	link(rel="stylesheet" href="/admin/css/image-uploader.css")
+	link(rel="stylesheet" href="/admin/css/addProduct.css")
 block content
 	.page-content-wrapper-inner
 		.viewport-header
@@ -14,16 +17,132 @@ block content
 			.row
 				.col-lg-12
 					.grid
-						p.grid-header All products
+						p.grid-header 
+							button.btn.btn-primary(type='button', data-target="#addProduct" data-toggle="modal") Add Product
 						.grid-body
 							.item-wrapper
+								.table-responsive
+									table.table.table-hover
+										thead
+											tr
+												th(scope='col') #
+												th(scope='col') Name
+												th(scope='col') Price
+												th(scope='col') Image
+												th(scope='col-2', colspan='2') Edit
+										tbody
+											each product,index in products
+												tr
+													th(scope='row') #{index + 1}
+													td #{product.productName}
+													td #{product.price}
+													td 
+														img(src='/images/products/'+ product.images[0])
+													td
+														a.btn.btn-primary(href='product/edit/'+product._id, type='button') Edit
+													td
+														btn.btn.btn-primary.delete-product(type='button', data-id=product._id) Delete
+		// Modal
+		#addProduct.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addProduct', aria-hidden='true')
+			.modal-dialog.modal-lg
+				.modal-content
+					.modal-header
+						h5#exampleModalLabel.modal-title Modal title
+						button.close(type='button', data-dismiss='modal', aria-label='Close')
+							span(aria-hidden='true') ×
+					.modal-body
+						form#form-add-product(action="/admin/add-product" method="POST" enctype="multipart/form-data")
+							.row.mb-3
+								.col-md-8.mx-auto
+									.form-group.row.showcase_row_area
+										.col-md-12
+											- if(errors)
+												each val in errors
+													.alert.alert-danger(role="alert")= val
+											- if(success)
+												each val in success
+													.alert.alert-success(role="alert")= val
+									.form-group.row.showcase_row_area
+										.col-md-2.showcase_text_area
+											label(for='productName') Name
+										.col-md-10.showcase_content_area
+											input#productName.form-control(type='text' name="productName" value='')
+									.form-group.row.showcase_row_area
+										.col-md-2.showcase_text_area
+											label(for='price') Price
+										.col-md-10.showcase_content_area
+											input#price.form-control(type='number' name="price" value='' onchange="formatPrice(this)")
+									.form-group.row.showcase_row_area
+										.col-md-2.showcase_text_area
+											label(for='category') Category
+										.col-md-10.showcase_content_area.position-relative
+											ul.autocomplete.position-absolute
+											input#add-product-category.form-control(type='text' name="category" value='')
+									.wrap-add-color
+										.form-group.row.showcase_row_area
+											.col-md-2.showcase_text_area
+												label(for='color') Color
+											.col-md-2.showcase_content_area
+												input.color.form-control(type="text" value="" name="colors")
+											.col-md-2.showcase_text_area
+												label(for='size') Size
+											.col-md-2.showcase_content_area
+												input.size.form-control(type="text" value="" name="sizes")
+											.col-md-2.showcase_text_area
+												label(for='quantity') Quantity
+											.col-md-2.showcase_content_area
+												input.quantity.form-control(type="number" value="" name="quantity")
+									.form-group.row.showcase_row_area
+										.col-md-10.offset-2
+											button#add-more-color.btn.btn-outline-secondary.w-100.mt-3(type='button') Add more color
+									.form-group.row.showcase_row_area
+										.col-md-2.showcase_text_area
+											label(for='description') Description
+										.col-md-10.showcase_content_area
+											textarea#description.form-control(cols='12' name="description" rows='5')
+									.form-group.row.showcase_row_area
+										.col-md-2.showcase_text_area
+											label(for='materials') Materials
+										.col-md-10.showcase_content_area
+											input#materials.form-control(type='text' name="materials" value='')
+									.form-group.row.showcase_row_area
+										.col-md-2.showcase_text_area
+											label(for='weight') Weight
+										.col-md-10.showcase_content_area
+											input#weight.form-control(type='number' name="weight" value='')
+									.form-group.row.showcase_row_area
+										.col-md-2.showcase_text_area
+											label(for='quantity') Dimensions
+										.col-md-3.showcase_content_area
+											input.length.form-control(type='number' name="length" value='')
+										.col-md-3.showcase_content_area
+											input.width.form-control(type='number' name="width" value='')
+										.col-md-4.showcase_content_area
+											input.height.form-control(type='number' name="height" value='')
+									.form-group.row.showcase_row_area
+											.col-md-2.showcase_text_area
+												label(for='upload-image-admin') Image
+											.col-md-10.input-images
+									.form-group.row.showcase_row_area
+										.col-md-12.text-center.mt-3
+											button#btn-add-product.btn.btn-success(type="submit") Add Product
+					.modal-footer
+						button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+
 								
 
 block append footerjs
-	script(src='../admin/vendors/js/core.js')
-	script(src='../admin/vendors/js/vendor.addons.js')
+	script(src='/admin/vendors/js/core.js')
+	script(src='/admin/vendors/js/vendor.addons.js')
 	// endinject
 	// Vendor Js For This Page Ends
 	// Vendor Js For This Page Ends
 	// build:js
-	script(src='../admin/js/template.js')
+	script(src='/admin/js/template.js')
+	script(src='/admin/js/image-uploader.js')
+	script(src='/admin/js/addProduct.js')
+	if(errors.length > 1)
+		script(type='text/javascript').
+			$('#addProduct').modal({
+					show: true
+			});

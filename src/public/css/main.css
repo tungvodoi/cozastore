@@ -3875,5 +3875,9 @@ input.num-product::-webkit-inner-spin-button {
 .modal-backdrop {
   z-index: 9999;
 }
-.username-nav:hover {
+.color {
+  text-transform: capitalize;
+}
+.size {
+  text-transform: uppercase;
 }

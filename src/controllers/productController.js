@@ -17,7 +17,6 @@ let getProductDetail = async (req, res) => {
       total = await cartService.calculateTotals(cart);
       cartProducts = await cartService.getCart(cart);
     }
-
     res.render('product-detail', {
       productDetail,
       cart: { cartProducts, total },

@@ -1,7 +1,7 @@
 .sidebar
         .user-profile
           .display-avatar.animated-avatar
-            img.profile-img.img-lg.rounded-circle(src='../admin/images/profile/male/image_1.png' alt='profile image')
+            img.profile-img.img-lg.rounded-circle(src='/admin/images/profile/male/image_1.png' alt='profile image')
           .info-wrapper
             p.user-name Allen Clerk
             h6.display-income $3,400,00
@@ -12,21 +12,17 @@
               span.link-title Dashboard
               i.mdi.mdi-gauge.link-icon
           li
-            a(href='#product' data-toggle='collapse' aria-expanded='false')
+            a(href='/admin/product')
               span.link-title Product
               i.mdi.mdi-store.link-icon
-            ul#product.collapse.navigation-submenu
-              li
-                a(href='/admin/product') All product
-              li
-                a(href='/admin/add-product') Add product
           li
-            a(href='#category' data-toggle='collapse' aria-expanded='false')
+            a(href='/admin/order')
+              span.link-title Order
+              i.mdi.mdi-grid.link-icon
+          li
+            a(href='/admin/add-category')
               span.link-title Category
-              i.mdi.mdi-store.link-icon
-            ul#category.collapse.navigation-submenu
-              li
-                a(href='/admin/add-category') Add category
+              i.mdi.mdi-gamepad.link-icon
           li
             a(href='#sample-pages' data-toggle='collapse' aria-expanded='false')
               span.link-title Sample Pages
@@ -61,7 +57,7 @@
               i.mdi.mdi-flower-tulip-outline.link-icon
           li.nav-category-divider DOCS
           li
-            a(href='../docs/docs.html')
+            a(href='/docs/docs.html')
               span.link-title Documentation
               i.mdi.mdi-asterisk.link-icon
         .sidebar-upgrade-banner

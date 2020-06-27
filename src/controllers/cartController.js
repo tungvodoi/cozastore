@@ -3,13 +3,14 @@ let UserModel = require('../models/userModel');
 let { cartService, productService } = require('../services/index');
 const uuid = require('uuid');
 const userModel = require('../models/userModel');
+
 let addToCart = async (req, res) => {
   let productAddToCart = {};
   let productId = req.body.productId;
   let quantity = parseInt(req.body.quantity);
   let size = req.body.size;
   let color = req.body.color;
-  let newQuantity = null;
+  let name = req.body.name;
   try {
     if (req.user) {
       let user = await UserModel.findUserById(req.user._id);
@@ -56,6 +57,7 @@ let addToCart = async (req, res) => {
       let subProductId = uuid.v4();
       req.session.cart.push({
         productId,
+        productName: name,
         subProductId,
         quantity,
         size,
@@ -97,8 +99,35 @@ let removeFromCart = async (req, res) => {
     res.status(501);
   }
 };
+let getShoppingCart = async (req, res) => {
+  let cartProducts = [];
+  let total;
+  let cart = req.session.cart;
+  try {
+    let productDetail = await productService.getProductDetail(req.params.id);
+    //Cart
+    if (req.user) {
+      let userUpdated = await UserModel.findUserById(req.user._id);
+      cart = userUpdated.cart;
+    }
 
+    if (cart) {
+      total = await cartService.calculateTotals(cart);
+      cartProducts = await cartService.getCart(cart);
+    }
+
+    res.render('shopping-cart', {
+      productDetail,
+      cart: { cartProducts, total },
+      user: req.user ? req.user : null,
+    });
+  } catch (error) {
+    console.log(error);
+    res.render('shopping-cart');
+  }
+};
 module.exports = {
   addToCart,
   removeFromCart,
+  getShoppingCart,
 };

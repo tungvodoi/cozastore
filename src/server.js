@@ -12,10 +12,10 @@ const initRoutes = require('./routes/web');
 
 // Init app
 const app = express();
-app.use('*', (req, res, next) => {
-  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-  next();
-});
+// app.use('*', (req, res, next) => {
+//   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//   next();
+// });
 //config DB
 connectDB();
 

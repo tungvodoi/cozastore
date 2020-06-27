@@ -1,0 +1,60 @@
+//- extends layout.pug
+
+//- block append head
+//- 	link(type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+//- 	link(rel="stylesheet" href="/admin/css/image-uploader.css")
+//- 	link(rel="stylesheet" href="/admin/css/addProduct.css")
+//- block content
+//- 	.page-content-wrapper-inner
+//- 		.viewport-header
+//- 			nav(aria-label='breadcrumb')
+//- 				ol.breadcrumb.has-arrow
+//- 					li.breadcrumb-item
+//- 						a(href='#') Dashboard
+//- 					li.breadcrumb-item
+//- 						a(href='#') Product
+//- 		.content-viewport
+//- 			.row
+//- 				.col-lg-12
+//- 					.grid
+//- 						p.grid-header 
+//- 							button.btn.btn-primary(type='button', data-target="#addProduct" data-toggle="modal") Add Product
+//- 						.grid-body
+//- 							.item-wrapper
+//- 								.table-responsive
+//- 									table.table.table-hover
+//- 										thead
+//- 											tr
+//- 												th(scope='col') #
+//- 												th(scope='col') Name
+//- 												th(scope='col') Price
+//- 												th(scope='col') Image
+//- 												th(scope='col-2', colspan='2') Edit
+//- 										tbody
+//- 											each product,index in products
+//- 												tr
+//- 													th(scope='row') #{index + 1}
+//- 													td #{product.productName}
+//- 													td #{product.price}
+//- 													td 
+//- 														img(src='/images/products/'+ product.images[0])
+//- 													td
+//- 														a.btn.btn-primary(href='product/edit/'+product._id, type='button') Edit
+//- 													td
+//- 														btn.btn.btn-primary.delete-product(type='button', data-id=product._id) Delete
+
+//- block append footerjs
+//- 	script(src='/admin/vendors/js/core.js')
+//- 	script(src='/admin/vendors/js/vendor.addons.js')
+//- 	// endinject
+//- 	// Vendor Js For This Page Ends
+//- 	// Vendor Js For This Page Ends
+//- 	// build:js
+//- 	script(src='/admin/js/template.js')
+//- 	script(src='/admin/js/image-uploader.js')
+//- 	script(src='/admin/js/addProduct.js')
+//- 	if(errors.length > 1)
+//- 		script(type='text/javascript').
+//- 			$('#addProduct').modal({
+//- 					show: true
+//- 			});
