@@ -1,0 +1,12 @@
+table th {
+  vertical-align: middle !important;
+}
+table td img {
+  height: 150px;
+}
+.color {
+  text-transform: capitalize;
+}
+.size {
+  text-transform: uppercase;
+}

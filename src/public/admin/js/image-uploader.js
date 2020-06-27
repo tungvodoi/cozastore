@@ -71,7 +71,7 @@
                 $input = $('<input>', {
                     type: 'file',
                     id: plugin.settings.imagesInputName + '-' + random(),
-                    name: plugin.settings.imagesInputName + '[]',
+                    name: plugin.settings.imagesInputName,
                     multiple: ''
                 }).appendTo($container),
 

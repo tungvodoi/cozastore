@@ -34,11 +34,38 @@ productSchema.statics = {
   createNew(item) {
     return this.create(item);
   },
+  findAllProducts() {
+    return this.find({});
+  },
   findProductById(productId) {
     return this.findById(productId).exec();
   },
   findProductLimit(limit) {
     return this.find({}).limit(limit);
+  },
+  updateProduct(product) {
+    return this.updateOne({ _id: product.id }, { $set: product });
+  },
+  updateProductImages(product) {
+    return this.updateOne(
+      {
+        _id: product.id,
+      },
+      { $push: { images: { $each: product.images } } }
+    ).exec();
+  },
+  deleteImage(productId, linkImage) {
+    return this.updateOne(
+      {
+        _id: productId,
+      },
+      { $pull: { images: linkImage } }
+    ).exec();
+  },
+  deleteProduct(productId) {
+    return this.deleteOne({
+      _id: productId,
+    }).exec();
   },
 };
 // let a = mongoose.model('product', productSchema);

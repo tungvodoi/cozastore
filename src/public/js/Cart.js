@@ -4,10 +4,11 @@ $('.js-addcart-detail').click(function (e) {
   let quantity = parseInt($('.num-product').val());
   let size = $('.js-select2.select-size').val();
   let color = $('.js-select2.select-color').val();
+  let name = $('.js-name-detail').text();
   $.ajax({
     type: 'POST',
     url: '/add-to-cart',
-    data: { productId, quantity, size, color },
+    data: { productId, quantity, size, color, name },
     success: function (product) {
       // If product not exists in cart
       if (product.exists) {
@@ -79,6 +80,7 @@ function removeFromCart(e) {
     },
   });
 }
+// Remove from Cart
 $('.header-cart-item-img').click(removeFromCart);
 function resetNumberCart() {
   $('.js-show-cart').attr(
@@ -86,12 +88,17 @@ function resetNumberCart() {
     $('.header-cart-wrapitem').children().length
   );
 }
+
 function calulateTotals() {
   let total = 0;
   $('.header-cart-item').each((index, element) => {
     let quantity = $(element).find('.header-cart-item-info-quantity').text();
-    let price = $(element).find('.header-cart-item-info-price').text();
+    let price = $(element)
+      .find('.header-cart-item-info-price')
+      .text()
+      .split(',')
+      .join('');
     total += parseInt(quantity) * parseInt(price);
   });
-  return total;
+  return Number(total.toFixed(1)).toLocaleString();
 }

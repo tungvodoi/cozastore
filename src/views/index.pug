@@ -246,7 +246,7 @@ block content
                 .block2-txt-child1.flex-col-l
                   a.stext-104.cl4.hov-cl1.trans-04.js-name-b2.p-b-6(href='product/'+product._id)
                     | #{product.productName}
-                  span.stext-105.cl3
+                  span.price.stext-105.cl3
                     | #{product.price}
                 .block2-txt-child2.flex-r.p-t-3
                   a.btn-addwish-b2.dis-block.pos-relative.js-addwish-b2(href='#')
@@ -444,3 +444,8 @@ block footer
       });
   // ===============================================================================================
   script(src='js/main.js')
+  script.
+    $('.price').each(function(){
+      $(this).text(Number(parseInt($(this).text()).toFixed(1)).toLocaleString())
+     
+    })
