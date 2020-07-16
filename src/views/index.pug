@@ -113,16 +113,17 @@ block content
         .flex-w.flex-l-m.filter-tope-group.m-tb-10
           button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5.how-active1(data-filter='*')
             | All Products
-          button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.women')
-            | Women
-          button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.men')
-            | Men
-          button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.bag')
-            | Bag
-          button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.shoes')
-            | Shoes
-          button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.watches')
-            | Watches
+          each cate in categories
+            button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.' + cate.categoryName)
+              | #{cate.categoryName}
+          //- button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.men')
+          //-   | Men
+          //- button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.bag')
+          //-   | Bag
+          //- button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.shoes')
+          //-   | Shoes
+          //- button.stext-106.cl6.hov1.bor3.trans-04.m-r-32.m-tb-5(data-filter='.watches')
+          //-   | Watches
         .flex-w.flex-c-m.m-tb-10
           .flex-c-m.stext-106.cl6.size-104.bor4.pointer.hov-btn3.trans-04.m-r-8.m-tb-4.js-show-filter
             i.icon-filter.cl2.m-r-6.fs-15.trans-04.zmdi.zmdi-filter-list
@@ -235,13 +236,13 @@ block content
                   | Crafts
       .row.isotope-grid
         each product in products
-          .col-sm-6.col-md-4.col-lg-3.p-b-35.isotope-item.women
+          .col-sm-6.col-md-4.col-lg-3.p-b-35.isotope-item(class=product.parentCategory)
             // Block2
             .block2
               .block2-pic.hov-img0
                 img(src='images/products/'+product.images[0] alt='IMG-PRODUCT')
-                a.block2-btn.flex-c-m.stext-103.cl2.size-102.bg0.bor2.hov-btn1.p-lr-15.trans-04.js-show-modal1(href='#')
-                  | Quick View
+                //- a.block2-btn.flex-c-m.stext-103.cl2.size-102.bg0.bor2.hov-btn1.p-lr-15.trans-04.js-show-modal1(href='#', data-id=product._id)
+                //-   | Quick View
               .block2-txt.flex-w.flex-t.p-t-14
                 .block2-txt-child1.flex-col-l
                   a.stext-104.cl4.hov-cl1.trans-04.js-name-b2.p-b-6(href='product/'+product._id)
@@ -444,8 +445,3 @@ block footer
       });
   // ===============================================================================================
   script(src='js/main.js')
-  script.
-    $('.price').each(function(){
-      $(this).text(Number(parseInt($(this).text()).toFixed(1)).toLocaleString())
-     
-    })

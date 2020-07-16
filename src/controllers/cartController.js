@@ -115,11 +115,16 @@ let getShoppingCart = async (req, res) => {
       total = await cartService.calculateTotals(cart);
       cartProducts = await cartService.getCart(cart);
     }
-
     res.render('shopping-cart', {
       productDetail,
       cart: { cartProducts, total },
       user: req.user ? req.user : null,
+      shipping: req.user
+        ? req.user.shippingAddress.filter(
+            (address) => address.isActive === true
+          )
+        : null,
+      errors: req.flash('errors'),
     });
   } catch (error) {
     console.log(error);

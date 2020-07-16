@@ -2,8 +2,8 @@
 $('.js-addcart-detail').click(function (e) {
   let productId = e.target.attributes['data-id'].value;
   let quantity = parseInt($('.num-product').val());
-  let size = $('.js-select2.select-size').val();
-  let color = $('.js-select2.select-color').val();
+  let size = $('.js-selecttung.select-size').val();
+  let color = $('.js-selecttung.select-color').val();
   let name = $('.js-name-detail').text();
   $.ajax({
     type: 'POST',
@@ -31,17 +31,17 @@ $('.js-addcart-detail').click(function (e) {
                   alt="IMG" />
           </div>
           <div class="header-cart-item-txt p-t-8">
-              <a class="header-cart-item-name m-b-18 hov-cl1 trans-04" href="#">${product.productName}</a>
-              <span class="header-cart-item-info">
+              <a class="header-cart-item-name m-b-18 hov-cl1 trans-04" href="/product/${product.productId}">${product.productName}</a>
+              <span class="header-cart-item-info">Quantity:
                   <span class="header-cart-item-info-quantity">${product.quantity}</span>
                   x
-                  <span class="header-cart-item-info-price">${product.price}</span>
+                  <span class="header-cart-item-info-price price">${Number(parseInt(product.price).toFixed(1)).toLocaleString()} VND</span>
               </span>
-              <span class="header-cart-item-info">
-                  <span class="header-cart-item-info-size">${product.size}</span>
+              <span class="header-cart-item-info">SIZE:
+                  <span class="header-cart-item-info-size size">${product.size}</span>
               </span>
-              <span class="header-cart-item-info">
-                  <span class="header-cart-item-info-color">${product.color}</span>
+              <span class="header-cart-item-info">Color:
+                  <span class="header-cart-item-info-color color">${product.color}</span>
               </span>
           </div>
         </li>
@@ -100,5 +100,5 @@ function calulateTotals() {
       .join('');
     total += parseInt(quantity) * parseInt(price);
   });
-  return Number(total.toFixed(1)).toLocaleString();
+  return `${Number(total.toFixed(1)).toLocaleString()} VND`;
 }

@@ -1,60 +1,95 @@
-//- extends layout.pug
+extends layout.pug
 
-//- block append head
-//- 	link(type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
-//- 	link(rel="stylesheet" href="/admin/css/image-uploader.css")
-//- 	link(rel="stylesheet" href="/admin/css/addProduct.css")
-//- block content
-//- 	.page-content-wrapper-inner
-//- 		.viewport-header
-//- 			nav(aria-label='breadcrumb')
-//- 				ol.breadcrumb.has-arrow
-//- 					li.breadcrumb-item
-//- 						a(href='#') Dashboard
-//- 					li.breadcrumb-item
-//- 						a(href='#') Product
-//- 		.content-viewport
-//- 			.row
-//- 				.col-lg-12
-//- 					.grid
-//- 						p.grid-header 
-//- 							button.btn.btn-primary(type='button', data-target="#addProduct" data-toggle="modal") Add Product
-//- 						.grid-body
-//- 							.item-wrapper
-//- 								.table-responsive
-//- 									table.table.table-hover
-//- 										thead
-//- 											tr
-//- 												th(scope='col') #
-//- 												th(scope='col') Name
-//- 												th(scope='col') Price
-//- 												th(scope='col') Image
-//- 												th(scope='col-2', colspan='2') Edit
-//- 										tbody
-//- 											each product,index in products
-//- 												tr
-//- 													th(scope='row') #{index + 1}
-//- 													td #{product.productName}
-//- 													td #{product.price}
-//- 													td 
-//- 														img(src='/images/products/'+ product.images[0])
-//- 													td
-//- 														a.btn.btn-primary(href='product/edit/'+product._id, type='button') Edit
-//- 													td
-//- 														btn.btn.btn-primary.delete-product(type='button', data-id=product._id) Delete
+block append head
+	link(type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
+	link(rel="stylesheet" href="/admin/css/image-uploader.css")
+	link(rel="stylesheet" href="/admin/css/addProduct.css")
+block content
+	.page-content-wrapper-inner
+		.viewport-header
+			nav(aria-label='breadcrumb')
+				ol.breadcrumb.has-arrow
+					li.breadcrumb-item
+						a(href='#') Dashboard
+					li.breadcrumb-item
+						a(href='#') Order
+		.content-viewport
+			.row
+				.col-lg-12
+					.grid
+						p.grid-header
+						.grid-body
+							.item-wrapper
+								.table-responsive
+									table.table.table-hover
+										thead
+											tr
+												th(scope='col') Order Id
+												th(scope='col') Username
+												th(scope='col') Price
+												th(scope='col-2') Status
+												th(scope='col-2', colspan='2') Action
+										tbody
+											each order,index in orders
+												tr
+													th(scope='row') #{order._id.toString().slice(0, 7)}
+													td= order.user.username
+													td.price= order.total
+													if order.status === 'Pending'
+														td.bg-warning= order.status
+													if order.status === 'Delivering'
+														td.bg-secondary= order.status
+													if order.status === 'Finished'
+														td.bg-success= order.status
 
-//- block append footerjs
-//- 	script(src='/admin/vendors/js/core.js')
-//- 	script(src='/admin/vendors/js/vendor.addons.js')
-//- 	// endinject
-//- 	// Vendor Js For This Page Ends
-//- 	// Vendor Js For This Page Ends
-//- 	// build:js
-//- 	script(src='/admin/js/template.js')
-//- 	script(src='/admin/js/image-uploader.js')
-//- 	script(src='/admin/js/addProduct.js')
-//- 	if(errors.length > 1)
-//- 		script(type='text/javascript').
-//- 			$('#addProduct').modal({
-//- 					show: true
-//- 			});
+													if order.status === 'Pending'
+														td
+															a.btn.btn-warning.js-accept-order(type='button' data-id=order._id) Accept
+													if order.status === 'Delivering'
+														td
+															a.btn.btn-secondary.js-finish-order(type='button' data-id=order._id) Finish
+													td
+														btn.btn.btn-primary.js-delete-order(type='button', data-id=order._id) Delete
+
+								
+
+block append footerjs
+	script(src='/admin/vendors/js/core.js')
+	script(src='/admin/vendors/js/vendor.addons.js')
+	// endinject
+	// Vendor Js For This Page Ends
+	// Vendor Js For This Page Ends
+	// build:js
+	script(src='/admin/js/template.js')
+	script(src='/admin/js/image-uploader.js')
+	script.
+		$('.price').each(function(){
+			$(this).text(Number(parseInt($(this).text()).toFixed(1)).toLocaleString())
+		})
+		$('.js-accept-order').click(function(e){
+			let orderId = $(e.target).attr('data-id');
+			$.post('/admin/accept-order',{orderId},function(data){
+				if(data){
+					window.location.href = window.location.origin + '/' + data
+				}
+				console.log(data);
+			})
+		})
+		$('.js-finish-order').click(function(e){
+			let orderId = $(e.target).attr('data-id');
+			$.post('/admin/finish-order',{orderId},function(data){
+				if(data){
+					window.location.href = window.location.origin + '/' + data
+				}
+				console.log(data);
+			})
+		})
+		$('.js-delete-order').click(function(e){
+			let orderId = $(e.target).attr('data-id');
+			$.post('/admin/delete-order',{orderId},function(data){
+				if(data){
+					window.location.href = window.location.origin + '/' + data
+				}
+				console.log(data);
+			})
+		})

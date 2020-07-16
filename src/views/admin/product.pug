@@ -35,7 +35,7 @@ block content
 												tr
 													th(scope='row') #{index + 1}
 													td #{product.productName}
-													td #{product.price}
+													td.price #{product.price}
 													td 
 														img(src='/images/products/'+ product.images[0])
 													td
@@ -141,6 +141,10 @@ block append footerjs
 	script(src='/admin/js/template.js')
 	script(src='/admin/js/image-uploader.js')
 	script(src='/admin/js/addProduct.js')
+	script.
+		$('.price').each(function(){
+			$(this).text(Number(parseInt($(this).text()).toFixed(1)).toLocaleString())
+		})
 	if(errors.length > 1)
 		script(type='text/javascript').
 			$('#addProduct').modal({

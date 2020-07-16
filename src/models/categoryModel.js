@@ -23,6 +23,9 @@ categoryModel.statics = {
       ],
     }).exec();
   },
+  findParentsCategoryByName() {
+    return this.find({ parentCategoryId: { $eq: null } });
+  },
   findSubCategoryByName(subCategoryName) {
     return this.findOne({
       $and: [
@@ -37,12 +40,20 @@ categoryModel.statics = {
         { categoryName: { $regex: new RegExp(keyword, 'i') } },
         { parentCategoryId: { $ne: null } },
       ],
-    }).limit(limit);
+    })
+  },
+  findSubCategoryLimita(keyword, limit) {
+    return this.findOne({
+      $and: [
+        { categoryName: { $regex: new RegExp(keyword, 'i') } },
+        { parentCategoryId: { $ne: null } },
+      ],
+    })
   },
   findCategoriesByNameLimit(keyword, limit) {
     return this.find({
       categoryName: { $regex: new RegExp(keyword, 'i') },
-    }).limit(limit);
+    })
   },
 };
 module.exports = mongoose.model('category', categoryModel);

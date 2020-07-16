@@ -101,6 +101,18 @@ let deleteProduct = (productId) => {
     }
   });
 };
+let getSizeByColor = (productId, color) => {
+  return new Promise(async (resolve, reject) => {
+    let sizes = await ProductModel.getSizeByColor(productId, color);
+    resolve(sizes);
+  });
+};
+let getColorBySize = (productId, size) => {
+  return new Promise(async (resolve, reject) => {
+    let colors = await ProductModel.getColorBySize(productId, size);
+    resolve(colors);
+  });
+};
 module.exports = {
   addProduct,
   getProductDetail,
@@ -109,4 +121,6 @@ module.exports = {
   updateProduct,
   deleteProductImage,
   deleteProduct,
+  getSizeByColor,
+  getColorBySize,
 };
