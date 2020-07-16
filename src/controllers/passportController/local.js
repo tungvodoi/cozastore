@@ -16,7 +16,7 @@ const initPassportLocal = () => {
       async function (req, username, password, done) {
         try {
           let user = await UserModel.findUserByName(username);
-          if (!user) {
+          if (!user || user.role !== 'user') {
             return done(
               null,
               false,
@@ -38,7 +38,7 @@ const initPassportLocal = () => {
               req.flash('errorLogin', transErrors.login_failed)
             );
           }
-          if (req.session.cart > 0) {
+          if (req.session.cart && req.session.cart.length > 0) {
             await UserModel.addSessionToCart(user._id, req.session.cart);
           }
           req.session.cart = [];

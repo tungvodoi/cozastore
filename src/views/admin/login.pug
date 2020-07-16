@@ -1,0 +1,62 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    title Label - Premium Responsive Bootstrap 4 Admin & Dashboard Template
+    // plugins:css
+    link(rel='stylesheet', href='/admin/vendors/iconfonts/mdi/css/materialdesignicons.css')
+    link(rel='stylesheet', href='/admin/vendors/css/vendor.addons.css')
+    // endinject
+    // vendor css for this page
+    // End vendor css for this page
+    // inject:css
+    link(rel='stylesheet', href='/admin/css/shared/style.css')
+    // endinject
+    // Layout style
+    link(rel='stylesheet', href='/admin/css/demo_1/style.css')
+    // Layout style
+    link(rel='shortcut icon', href='/admin/images/favicon.ico')
+  body
+    .authentication-theme.auth-style_1
+      .row
+        .col-12.logo-section
+          a.logo(href='../../index.html')
+            img(src='/images/icons/logo-01.png', alt='logo')
+      .row
+        .col-lg-5.col-md-7.col-sm-9.col-11.mx-auto
+          .grid
+            .grid-body
+              .row
+                .col-lg-7.col-md-8.col-sm-9.col-12.mx-auto.form-wrapper
+                  if(errorLogin)
+                    each error in errorLogin
+                      p.error= error
+                  form(action='/admin/login',method="post")
+                    .form-group.input-rounded
+                      input.form-control(type='text', placeholder='Username', name="username")
+                    .form-group.input-rounded
+                      input.form-control(type='password', placeholder='Password', name="password")
+                    .form-inline
+                      .checkbox
+                        label
+                          input.form-check-input(type='checkbox')
+                          | Remember me 
+                          i.input-frame
+                    button.btn.btn-primary.btn-block(type='submit')  Login 
+                  .signup-link
+                    p Don't have an account yet?
+                    a(href='#') Sign Up
+      .auth_footer
+        p.text-muted.text-center © Label Inc 2019
+    // page body ends
+    // SCRIPT LOADING START FORM HERE /////////////
+    // plugins:js
+    script(src='/admin/vendors/js/core.js')
+    script(src='/admin/vendors/js/vendor.addons.js')
+    // endinject
+    // Vendor Js For This Page Ends
+    // Vendor Js For This Page Ends
+    // build:js
+    script(src='/admin/js/template.js')
+    // endbuild

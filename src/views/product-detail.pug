@@ -57,22 +57,38 @@ block content
 						.p-t-33
 							.flex-w.flex-r-m.p-b-10
 								.size-203.flex-c-m.respon6
-									| Size
-								.size-204.respon6-next
-									.rs1-select2.bor8.bg0
-										select.js-select2.select-size(name='size')
-											each attr in productDetail.product_attr
-												option #{attr.size}
-										.dropDownSelect2
-							.flex-w.flex-r-m.p-b-10
-								.size-203.flex-c-m.respon6
 									| Color
 								.size-204.respon6-next
 									.rs1-select2.bor8.bg0
-										select.js-select2.select-color(name='color')
+										select.js-selecttung.select-color(name='color')
 											each attr in productDetail.product_attr
-												option #{attr.color}
-										.dropDownSelect2
+												option(val=attr.color) #{attr.color}
+							.flex-w.flex-r-m.p-b-10
+								.size-203.flex-c-m.respon6
+									| Size
+								.size-204.respon6-next
+									.rs1-select2.bor8.bg0
+										select.js-selecttung.select-size(name='size')
+											each attr in productDetail.product_attr
+												option #{attr.size}
+							//- .flex-w.flex-r-m.p-b-10
+							//- 	.size-203.flex-c-m.respon6
+							//- 		| Size
+							//- 	.size-204.respon6-next
+							//- 		.rs1-select2.bor8.bg0
+							//- 			select.js-select2.select-size(name='size')
+							//- 				each attr in productDetail.product_attr
+							//- 					option #{attr.size}
+							//- 			.dropDownSelect2
+							//- .flex-w.flex-r-m.p-b-10
+							//- 	.size-203.flex-c-m.respon6
+							//- 		| Color
+							//- 	.size-204.respon6-next
+							//- 		.rs1-select2.bor8.bg0
+							//- 			select.js-select2.select-color(name='color')
+							//- 				each attr in productDetail.product_attr
+							//- 					option #{attr.color}
+							//- 			.dropDownSelect2
 							.flex-w.flex-r-m.p-b-10
 								.size-204.flex-w.flex-m.respon6-next
 									.wrap-num-product.flex-w.m-r-20.m-tb-10
@@ -435,7 +451,31 @@ block footer
 	// ===============================================================================================
 	script(src='/js/main.js')
 	script.
-		$('.price').each(function(){
-			$(this).text(Number(parseInt($(this).text()).toFixed(1)).toLocaleString())
-			
+		$('.select-color').change(function(){
+			$.post('/get-size-by-color',{productId:$('.js-addcart-detail').attr('data-id'),color:$(this).val()},function(data){
+				let newOptions = [];
+				for(let i=0;i<data.sizes.length;i++){
+					newOptions.push({text: data.sizes[i],value:data.sizes[i] })
+				}
+				var $el = $(".select-size");
+				$el.empty(); // remove old options
+				$.each(newOptions, function(key,value) {
+					$el.append($("<option></option>")
+						.attr("value", value.value).text(value.value));
+				});
+			})
 		})
+		//- $('.select-size').change(function(){
+		//- 	$.post('/get-color-by-size',{productId:$('.js-addcart-detail').attr('data-id'),size:$(this).val()},function(data){
+		//- 		let newOptions = [];
+		//- 		for(let i=0;i<data.colors.length;i++){
+		//- 			newOptions.push({text: data.colors[i],value:data.colors[i] })
+		//- 		}
+		//- 		var $el = $(".select-color");
+		//- 		$el.empty(); // remove old options
+		//- 		$.each(newOptions, function(key,value) {
+		//- 			$el.append($("<option></option>")
+		//- 				.attr("value", value.value).text(value.value));
+		//- 		});
+		//- 	})
+		//- })

@@ -1,8 +1,8 @@
 nav.t-header
-      .t-header-brand-wrapper
-        a(href='index.html')
-          img.logo(src='/admin/images/logo.svg' alt='')
-          img.logo-mini(src='/admin/images/logo_mini.svg' alt='')
+      .t-header-brand-wrapper(style="justify-content: center; padding-left: 0;")
+        a(href='/admin')
+          img.logo(src='/images/icons/logo-01.png' alt='' style="width: 100%")
+          img.logo-mini(src='/images/icons/logo-01.png' alt='')
       .t-header-content-wrapper
         .t-header-content
           button.t-header-toggler.t-header-mobile-toggler.d-block.d-lg-none
@@ -77,21 +77,5 @@ nav.t-header
               a#appsDropdown.nav-link(href='#' data-toggle='dropdown' aria-expanded='false')
                 i.mdi.mdi-apps.mdi-1x
               .dropdown-menu.navbar-dropdown.dropdown-menu-right(aria-labelledby='appsDropdown')
-                .dropdown-header
-                  h6.dropdown-title Apps
-                  p.dropdown-title-text.mt-2 Authentication required for 3 apps
-                .dropdown-body.border-top.pt-0
-                  a.dropdown-grid
-                    i.grid-icon.mdi.mdi-jira.mdi-2x
-                    span.grid-tittle Jira
-                  a.dropdown-grid
-                    i.grid-icon.mdi.mdi-trello.mdi-2x
-                    span.grid-tittle Trello
-                  a.dropdown-grid
-                    i.grid-icon.mdi.mdi-artstation.mdi-2x
-                    span.grid-tittle Artstation
-                  a.dropdown-grid
-                    i.grid-icon.mdi.mdi-bitbucket.mdi-2x
-                    span.grid-tittle Bitbucket
                 .dropdown-footer
-                  a(href='#') View All
+                  a(href='/admin/logout') Logout

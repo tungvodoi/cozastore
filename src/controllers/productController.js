@@ -27,4 +27,26 @@ let getProductDetail = async (req, res) => {
     res.render('product-detail');
   }
 };
-module.exports = { getProductDetail };
+let getSizeByColor = async (req, res) => {
+  let productId = req.body.productId;
+  let color = req.body.color;
+  try {
+    let sizes = await productService.getSizeByColor(productId, color);
+    res.status(200).send(...sizes);
+  } catch (error) {
+    console.log(error);
+    res.status(501).send('Cannot get size');
+  }
+};
+let getColorBySize = async (req, res) => {
+  let productId = req.body.productId;
+  let size = req.body.size;
+  try {
+    let colors = await productService.getColorBySize(productId, size);
+    res.status(200).send(...colors);
+  } catch (error) {
+    console.log(error);
+    res.status(501).send('Cannot get size');
+  }
+};
+module.exports = { getProductDetail, getSizeByColor, getColorBySize };

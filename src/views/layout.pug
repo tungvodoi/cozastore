@@ -10,3 +10,12 @@ if !user
   include includes/authenModel
 block footer
 script(src='/js/Cart.js')
+script.
+  $('.price').each(function(){
+    $(this).text(Number(parseInt($(this).text()).toFixed(1)).toLocaleString() + ' VND');
+    if($(this).text() === 'NaN VND'){
+      $(this).text('0 VND')
+    }
+    
+    
+  })

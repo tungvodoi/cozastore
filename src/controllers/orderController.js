@@ -1,5 +1,9 @@
 let UserModel = require('../models/userModel');
-let { productService, cartService } = require('../services/index');
+let {
+  productService,
+  cartService,
+  orderService,
+} = require('../services/index');
 
 let getOder = async (req, res) => {
   let cartProducts = [];
@@ -27,6 +31,22 @@ let getOder = async (req, res) => {
     res.render('order');
   }
 };
+let createOrder = async (req, res) => {
+  if (req.user.cart.length == 0) {
+    req.flash('errors', `You don't have any product in your cart`);
+    res.redirect('/shopping-cart');
+  }
+  let indexShippingAddress = req.body.shippingAddressIndex;
+  let createOrderStatus = await orderService.createOrder(
+    req.user._id,
+    req.user.cart,
+    req.user.shippingAddress[indexShippingAddress]
+  );
+  if (createOrderStatus) {
+  }
+  res.redirect('/order');
+};
 module.exports = {
   getOder,
+  createOrder,
 };

@@ -27,9 +27,11 @@ let addCategory = async (req, res) => {
         categoryName,
         subCategoryName
       );
-      res.render('admin/add-category', { success: statusAddCategory });
     }
-    res.render('admin/add-category', { errors: errorsArr });
+    res.render('admin/add-category', {
+      errors: errorsArr,
+      success: statusAddCategory,
+    });
   } catch (error) {
     console.log(error);
     res.render('admin/add-category', { errors: errorsArr });
@@ -48,7 +50,9 @@ let getSubCategory = async (req, res) => {
 let getCategoryAndSubCategory = async (req, res) => {
   try {
     let keyword = req.body.keyword;
-    let categoryAndSubCategory = await categoryService.getCategoryAndSubCategory(keyword);
+    let categoryAndSubCategory = await categoryService.getCategoryAndSubCategory(
+      keyword
+    );
     res.status(200).send(categoryAndSubCategory);
   } catch (error) {
     console.log(error);

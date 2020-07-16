@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const passport = require('passport');
 
 const {
@@ -37,10 +36,13 @@ const initRoutes = (app) => {
       failureFlash: true,
     })
   );
+  app.get('/verify/:token', authenController.checkLoggedOut, authenController.verifyAccount);
   app.get('/logout', authenController.logout);
 
   // Product router
   app.get('/product/:id', productController.getProductDetail);
+  app.post('/get-size-by-color', productController.getSizeByColor);
+  app.post('/get-color-by-size', productController.getColorBySize);
 
   // Cart router
   app.post('/add-to-cart', cartController.addToCart);
@@ -50,6 +52,7 @@ const initRoutes = (app) => {
   app.get('/shopping-cart', cartController.getShoppingCart);
 
   //Order
-  app.get('/order', orderController.getOder);
+  app.get('/order', authenController.checkLoggedIn, orderController.getOder);
+  app.post('/order', authenController.checkLoggedIn, orderController.createOrder);
 };
 module.exports = initRoutes;

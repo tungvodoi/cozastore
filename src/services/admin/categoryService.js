@@ -51,12 +51,33 @@ const addCategory = (categoryName, subCategoryName) => {
 const getSubCategory = (keyword) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(keyword);
-      let listCategory = CategoryModel.findSubCategoryLimit(keyword, 10);
+      let listCategory = CategoryModel.findSubCategoryLimita(keyword, 10);
       resolve(listCategory);
     } catch (error) {
       console.log(error);
       reject(transErrors.add_category);
+    }
+  });
+};
+const getParentsCategory = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let listCategory = CategoryModel.findParentsCategoryByName();
+      resolve(listCategory);
+    } catch (error) {
+      console.log(error);
+      reject('some thing wrong');
+    }
+  });
+};
+const getParentsCategoryById = (parentId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let listCategory = CategoryModel.findCategoryById(parentId);
+      resolve(listCategory);
+    } catch (error) {
+      console.log(error);
+      reject('some thing wrong');
     }
   });
 };
@@ -92,4 +113,6 @@ module.exports = {
   addCategory,
   getSubCategory,
   getCategoryAndSubCategory,
+  getParentsCategory,
+  getParentsCategoryById,
 };
